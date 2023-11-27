@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <title>My first three.js app</title>
+        <style>
+            body { margin: 0; }
+            canvas { display: block; }
+        </style>
+    </head>
+    <body>
+        <h1></h1>
+    
+        <script src="./three.js"></script>
+        
+        <script type="module">
+                import { GLTFLoader } from 'https://threejs.org/examples/jsm/loaders/GLTFLoader.js';
+            import { OrbitControls } from 'https://threejs.org/examples/jsm/controls/OrbitControls.js';
+            var renderer,scene,camera;
+            
+            
+           
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xfff6e6)
+            camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+                
+            document.body.appendChild( renderer.domElement );
+            var loader = new GLTFLoader();
+            var hlight = new THREE.AmbientLight(0x404040, 100)
+    scene.add(hlight)
+
+    var directionalLight = new THREE.DirectionalLight(0xffffff, 100)
+    directionalLight.position.set(0,1,0)
+    directionalLight.castShadow = true
+    scene.add(directionalLight)
+            
+
+    var light = new THREE.PointLight(0xffffff, 10)
+    light.position.set(0, 300, 500)
+    scene.add(light)
+
+        var light2 = new THREE.PointLight(0xffffff, 10)
+    light2.position.set(500, 100, 0)
+    scene.add(light2)
+
+    var light3 = new THREE.PointLight(0xffffff, 10)
+    light3.position.set(0, 100, -500)
+    scene.add(light3)
+
+    var light4 = new THREE.PointLight(0xffffff, 10)
+    light4.position.set(-5000, 300, 0)
+    scene.add(light4)
+    var controls = new OrbitControls(camera, renderer.domElement);
+    document.body.appendChild(renderer.domElement)
+            
+            
+
+
+    var loader = new GLTFLoader(); 
+            loader.load( './scene.gltf', function ( gltf ) 
+                        { 
+                scene.add( gltf.scene ); 
+            }, undefined, function ( error ) { console.error( error ); } );
+           
+            
+
+// load a image resource
+            
+
+camera.position.z = 5;
+            
+
+            
+            var animate = function () {
+                requestAnimationFrame( animate );
+
+                
+
+                renderer.render( scene, camera );
+            };
+
+            animate();
+            
+            
+            
+        </script>
+    </body>
+</html>
