@@ -19,7 +19,7 @@ function init() {
 
     // Load your 3D car models
     loadCar('tesla_model_3/scene.gltf', 'car1', new THREE.Vector3(-2, 0, 0));
-    loadCar('path/to/car2.gltf', 'car2', new THREE.Vector3(2, 0, 0));
+    loadCar('tesla_model_s/scene.gltf', 'car2', new THREE.Vector3(2, 0, 0));
 
     // Add some annotations
     addAnnotations();
