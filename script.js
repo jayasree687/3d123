@@ -1,4 +1,4 @@
-import * as THREE from 'path/to/three.js';
+import * as THREE from 'model-viewer.min.js';
 
 let scene, camera, renderer;
 let car1, car2;
