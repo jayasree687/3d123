@@ -18,7 +18,7 @@ function init() {
     document.getElementById('scene-container').appendChild(renderer.domElement);
 
     // Load your 3D car models
-    loadCar('path/to/car1.gltf', 'car1', new THREE.Vector3(-2, 0, 0));
+    loadCar('tesla_model_3/scene.gltf', 'car1', new THREE.Vector3(-2, 0, 0));
     loadCar('path/to/car2.gltf', 'car2', new THREE.Vector3(2, 0, 0));
 
     // Add some annotations
