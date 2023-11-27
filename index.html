@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script type="module" src="path/to/three.js"></script>
+    <script type="module" src="script.js"></script>
 </head>
 <body>
-    <a-scene>
-        <!-- 3D car model -->
-        <a-entity
-            gltf-model="url(tesla_model_3/scene.gltf)"
-            position="0 1 -3"
-            scale="0.5 0.5 0.5"
-        ></a-entity>
-
-        <!-- Camera -->
-        <a-entity camera look-controls wasd-controls></a-entity>
-    </a-scene>
+    <div id="scene-container"></div>
+    <div id="ui-container">
+        <button onclick="toggleCar('car1')">Car 1</button>
+        <button onclick="toggleCar('car2')">Car 2</button>
+        <button onclick="toggleAnnotations()">Toggle Annotations</button>
+    </div>
 </body>
 </html>
