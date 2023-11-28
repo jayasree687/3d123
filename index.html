@@ -67,7 +67,16 @@ controls.zoomSpeed = 0.9;
 
 controls.minDistance = 3;
 controls.maxDistance = 2;
-controls.pan = 0;  
+controls.pan = 0;
+orbit.addEventListener( 'change', function(){
+    if (this.target.x < -1){
+        this.target.x = -1;
+        camera.position.x = -1;
+    } else if (this.target.x > 1){
+        this.target.x = 1;
+        camera.position.x = 1;
+    }
+})  
 
 controls.minPolarAngle = 0; // radians
 controls.maxPolarAngle = Math.PI /2; // radians
