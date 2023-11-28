@@ -61,13 +61,13 @@ document.body.appendChild( renderer.domElement);
 // Camera Rotation Control
 var controls = new THREE.OrbitControls( camera );
 
-controls.rotateSpeed = 0.3;
+controls.rotateSpeed = 0.2;
 controls.zoomSpeed = 0.9;
 
 controls.minDistance = 3;
-controls.maxDistance = 10;
+controls.maxDistance = 2;
 
-controls.minPolarAngle = 0; // radians
+controls.minPolarAngle = 90; // radians
 controls.maxPolarAngle = Math.PI /2; // radians
 
 controls.enableDamping = true;
