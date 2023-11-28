@@ -22,6 +22,7 @@ body {
 Created using a tutorial from Redstapler
 GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
 ************** -->
+<button type="button">Click Me!</button> 
 <script>console.clear();</script>
 <!-- partial -->
   <script src='https://unpkg.com/three@0.108.0/build/three.js'></script>
@@ -66,6 +67,7 @@ controls.zoomSpeed = 0.9;
 
 controls.minDistance = 3;
 controls.maxDistance = 2;
+controls.pan = 0;  
 
 controls.minPolarAngle = 0; // radians
 controls.maxPolarAngle = Math.PI /2; // radians
