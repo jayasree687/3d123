@@ -100,7 +100,7 @@ loader.load( 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/39255/ladybug.gltf', 
 });
   var loader = new THREE.GLTFLoader();
 
-loader.crossOrigin = true;
+loader.crossOrigin = false;
 
 loader.load( 'Room_1.glb', function ( data ) {
     var object = data.scene;
