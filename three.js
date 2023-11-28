@@ -60,7 +60,7 @@ var loader = new THREE.GLTFLoader();
 
 loader.crossOrigin = true;
 
-loader.load( 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/39255/ladybug.gltf', function ( data ) {
+loader.load( 'assets/island.obj', function ( data ) {
     var object = data.scene;
      object.position.set(0, -10, -0.1);
     // object.scale.set(0.5,0.5,0.5);
