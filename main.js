@@ -2,6 +2,8 @@
 // GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
 
 // Three JS needs mainly below three things
+import * as THREE from "three.js";
+import OrbitControls from "https://cdn.skypack.dev/orbit-controls-es6@2.0.1";
 
 /* //////////////////////////////////////// */
 
