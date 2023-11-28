@@ -43,7 +43,7 @@ scene.background = new THREE.Color(0x000000);
 /* //////////////////////////////////////// */
 
 // CAMERA
-var camera = new THREE.PerspectiveCamera( 80, window.innerWidth / window.innerHeight, 1, 800 );
+var camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 800 );
 camera.position.set(0,0,0);
 camera.rotation.set(0,1,0);
 
@@ -78,11 +78,11 @@ controls.dampingFactor = 0.05;
 
 // Point Light
 var light = new THREE.PointLight( 0xffffcc, 20, 200 );
-light.position.set( 4, 30, -20 );
+light.position.set( 4, 20, -20 );
 scene.add( light );
 
 var light2 = new THREE.AmbientLight( 0x20202A, 20, 100 );
-light2.position.set( 30, -10, 30 );
+light2.position.set( 20, -10, 30 );
 scene.add( light2 );
 
 /* ////////////////////////////////////////// */
