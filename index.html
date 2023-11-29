@@ -101,6 +101,17 @@ loader.load( 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/39255/ladybug.gltf', 
     scene.add( object );
 });
 
+  var loader = new THREE.GLTFLoader();
+
+loader.crossOrigin = true;
+
+loader.load( 'Room_1.glb', function ( data ) {
+    var object = data.scene;
+     object.position.set(0, 0, 0);
+    // object.scale.set(1,1,1);
+    scene.add( object );
+});
+
 /* //////////////////////////////////////// */
 
 // Render animation on every rendering phase
