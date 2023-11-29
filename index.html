@@ -136,18 +136,18 @@ loader.crossOrigin = true;
 loader.load( 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/39255/ladybug.gltf', function ( data ) {
     var object = data.scene;
      object.position.set(0, -10, -0.1);
-    // object.scale.set(0.5,0.5,0.5);
+     object.scale.set(0.5,0.5,0.5);
     scene.add( object );
 });
 
   var loader1 = new THREE.GLTFLoader();
 
-loader.crossOrigin = true;
+loader1.crossOrigin = true;
 
-loader.load( 'Room_1.glb', function ( data ) {
+loader1.load( 'Room_1.glb', function ( data ) {
     var object = data.scene;
      object.position.set(0, 0, 0);
-    // object.scale.set(1,1,1);
+     object.scale.set(1,1,1);
     scene.add( object );
 });
 
@@ -175,67 +175,7 @@ window.addEventListener( 'resize', function () {
 	
 
 /*////////////////////////////////////////*/
-var loader1 = new THREE.GLTFLoader();
 
-    loader1.load('Blood analyzer_Back_2.glb', handle_load);       
-    var mesh1;
-
-   function handle_load(gltf) {           
-
-    console.log(gltf);
-
-    mesh1 = gltf.scene;
-
-    console.log(mesh1);
-             
-    scene.add(mesh1);
-
-    mesh1.position.z = 0;
-
-        
-    // visibility
-
-      mesh1.visible = false;              
-
-      document.getElementById("hideShow").addEventListener("click", function(){
-
-      mesh1.visible = !mesh1.visible;
- 
-   });
-
-};
-
-    // add in object 2
-
-   var loader = new THREE.GLTFLoader();
-
-   loader.load('C-arms_animation.glb', handle_load);
-
-   var mesh2;
-
-   function handle_load(gltf) {
-
-      console.log(gltf);
-
-      mesh2 = gltf.scene;
-
-      console.log(mesh2.children[0]);
-
-      scene.add(mesh2);
-
-      mesh2.position.z = 0; 
-
-      //visibility 
-      
-     mesh2.visible = true;
-
-      document.getElementById("hideShowModels").addEventListener("click", function(){
-
-      mesh2.visible = !mesh2.visible;
-  
-         });
-
-  }	
 </script>
  <div class="hud">
 		<b>I am a button</b>
