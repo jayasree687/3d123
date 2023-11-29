@@ -22,7 +22,6 @@ body {
 Created using a tutorial from Redstapler
 GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
 ************** -->
-<button type="button">Click Me!</button> 
 <script>console.clear();</script>
 <!-- partial -->
   <script src='https://unpkg.com/three@0.108.0/build/three.js'></script>
@@ -44,9 +43,8 @@ scene.background = new THREE.Color(0x000000);
 /* //////////////////////////////////////// */
 
 // CAMERA
-var camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 800 );
-camera.position.set(0,0,0);
-camera.rotation.set(0,1,0);
+var camera = new THREE.PerspectiveCamera( 80, window.innerWidth / window.innerHeight, 1, 800 );
+camera.position.set(5,5,5);
 
 /* ////////////////////////////////////////// */
 
@@ -62,37 +60,28 @@ document.body.appendChild( renderer.domElement);
 // Camera Rotation Control
 var controls = new THREE.OrbitControls( camera );
 
-controls.rotateSpeed = 0.2;
+controls.rotateSpeed = 0.3;
 controls.zoomSpeed = 0.9;
 
 controls.minDistance = 3;
-controls.maxDistance = 2;
-controls.pan = 0;
-orbit.addEventListener( 'change', function(){
-    if (this.target.x < -1){
-        this.target.x = -1;
-        camera.position.x = -1;
-    } else if (this.target.x > 1){
-        this.target.x = 1;
-        camera.position.x = 1;
-    }
-})  
+controls.maxDistance = 20;
 
 controls.minPolarAngle = 0; // radians
 controls.maxPolarAngle = Math.PI /2; // radians
 
-
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
 
 
 /* /////////////////////////////////////////////// */
 
 // Point Light
 var light = new THREE.PointLight( 0xffffcc, 20, 200 );
-light.position.set( 4, 20, -20 );
+light.position.set( 4, 30, -20 );
 scene.add( light );
 
 var light2 = new THREE.AmbientLight( 0x20202A, 20, 100 );
-light2.position.set( 20, -10, 30 );
+light2.position.set( 30, -10, 30 );
 scene.add( light2 );
 
 /* ////////////////////////////////////////// */
@@ -106,16 +95,6 @@ loader.load( 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/39255/ladybug.gltf', 
     var object = data.scene;
      object.position.set(0, -10, -0.1);
     // object.scale.set(0.5,0.5,0.5);
-    scene.add( object );
-});
-  var loader = new THREE.GLTFLoader();
-
-loader.crossOrigin = false;
-
-loader.load( 'Room_1.glb', function ( data ) {
-    var object = data.scene;
-     object.position.set(0, 0, 0);
-    // object.scale.set(1,1,1);
     scene.add( object );
 });
 
