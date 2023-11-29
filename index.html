@@ -107,6 +107,11 @@ controls.maxPolarAngle = Math.PI /0; // radians
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 controls.enablePan = false;
+const vec = Vector3();
+camera.getWorldDirection( vec );
+vec.y = 0;
+vec.add( character.position );
+character.lookAt( vec );	
 
 
 
