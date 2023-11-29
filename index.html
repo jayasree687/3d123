@@ -156,55 +156,7 @@ loader1.load( 'Room_1.glb', function ( data ) {
 loader1.rotation.x = Math.PI/4;
 loader1.rotation.y = Math.PI/4;	
 
-const mouse = new THREE.Vector2();
-    const raycaster = new THREE.Raycaster();
-    let isDragging = false;
-    let previousMousePosition = {
-      x: 90,
-      y:0
-    };
 
-    function onMouseMove(event) {
-      const rect = renderer.domElement.getBoundingClientRect();
-      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
-      if (isDragging) {
-        const deltaMove = {
-          x: mouse.x - previousMousePosition.x,
-          y: mouse.y - previousMousePosition.y
-        };
-
-        const deltaRotationQuaternion = new THREE.Quaternion()
-          .setFromEuler(new THREE.Euler(
-            toRadians(deltaMove.y * 0
-                     ),
-            toRadians(deltaMove.x * 90),
-            0,
-            'XYZ'
-          ));
-
-        loader1.quaternion.multiplyQuaternions(deltaRotationQuaternion, loader1.quaternion);
-      }
-
-      previousMousePosition = {
-        x: mouse.x,
-        y: mouse.y
-      };
-    }
-
-    function onMouseDown(event) {
-      isDragging = true;
-    }
-
-    function onMouseUp(event) {
-      isDragging = false;
-    }
-
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mousedown', onMouseDown);
-    window.addEventListener('mouseup', onMouseUp);
-  }
 const numberTexture = new THREE.CanvasTexture(
     document.querySelector('#number')
 );
