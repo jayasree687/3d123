@@ -166,7 +166,71 @@ window.addEventListener( 'resize', function () {
   renderer.setSize( window.innerWidth, window.innerHeight );
 }, false );
 
+
+	
+
 /*////////////////////////////////////////*/
+var loader1 = new THREE.GLTFLoader();
+
+    loader1.load('../models/text2.glb', handle_load);       
+    var mesh1;
+
+   function handle_load(gltf) {           
+
+    console.log(gltf);
+
+    mesh1 = gltf.scene;
+
+    console.log(mesh1);
+             
+    scene.add(mesh1);
+
+    mesh1.position.z = 0;
+
+        
+    // visibility
+
+      mesh1.visible = true;              
+
+      document.getElementById("hideShow").addEventListener("click", function(){
+
+      mesh1.visible = !mesh1.visible;
+ 
+   });
+
+};
+
+    // add in object 2
+
+   var loader = new THREE.GLTFLoader();
+
+   loader.load('../models/objects.glb', handle_load);
+
+   var mesh2;
+
+   function handle_load(gltf) {
+
+      console.log(gltf);
+
+      mesh2 = gltf.scene;
+
+      console.log(mesh2.children[0]);
+
+      scene.add(mesh2);
+
+      mesh2.position.z = 0; 
+
+      //visibility 
+      
+     mesh2.visible = true;
+
+      document.getElementById("hideShowModels").addEventListener("click", function(){
+
+      mesh2.visible = !mesh2.visible;
+  
+         });
+
+  }	
 </script>
  <div class="hud">
 		<b>I am a button</b>
