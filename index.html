@@ -24,6 +24,15 @@ GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
 ************** -->
 <script>console.clear();</script>
 <!-- partial -->
+ <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js" crossorigin="anonymous"></script>
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.149.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.149.0/examples/jsm/"
+    }
+  }
+</script> 
 <script src='three.js'></script>
 <script src='https://unpkg.com/three@0.108.0/examples/js/controls/OrbitControls.js'></script>
 <script src='https://unpkg.com/three@0.108.0/examples/js/loaders/GLTFLoader.js'></script>
@@ -134,6 +143,13 @@ window.addEventListener( 'resize', function () {
 
 /*////////////////////////////////////////*/
 </script>
+ <div class="hud">
+		<b>I am a button</b>
+		<br>
+		<small><small>
+				( just staying here - do not click me )
+		</small></small>
+</div> 
 
 </body>
 </html>
