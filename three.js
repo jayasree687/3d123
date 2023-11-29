@@ -182,7 +182,7 @@
 	} );
 
 	var REVISION = '108';
-	var MOUSE = { LEFT: 0, MIDDLE: 1, RIGHT: 2, ROTATE: 0, DOLLY: 1, PAN: 2 };
+	var MOUSE = { LEFT: 0, MIDDLE: 1, RIGHT: 2, ROTATE: 0 };
 	var TOUCH = { ROTATE: 0, PAN: 1, DOLLY_PAN: 2, DOLLY_ROTATE: 3 };
 	var CullFaceNone = 0;
 	var CullFaceBack = 1;
@@ -975,10 +975,10 @@
 
 			var c = Math.cos( angle ), s = Math.sin( angle );
 
-			var x = this.x - center.x;
+			//var x = this.x - center.x;
 			var y = this.y - center.y;
 
-			this.x = x * c - y * s + center.x;
+			//this.x = x * c - y * s + center.x;
 			this.y = x * s + y * c + center.y;
 
 			return this;
