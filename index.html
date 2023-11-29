@@ -107,6 +107,7 @@ controls.maxPolarAngle = Math.PI /0; // radians
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 controls.enablePan = false;
+controls.enableRotate = false;	
 
 
 	
@@ -151,6 +152,8 @@ loader1.load( 'Room_1.glb', function ( data ) {
      object.scale.set(1,1,1);
      	
     scene.add( object );
+loader1.rotation.x = Math.PI/4;
+loader1.rotation.y = Math.PI/4;	
 
 
 const numberTexture = new THREE.CanvasTexture(
