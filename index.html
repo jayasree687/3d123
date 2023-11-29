@@ -147,7 +147,16 @@ loader1.load( 'Room_1.glb', function ( data ) {
      object.position.set(0, 0, 0);
      object.scale.set(1,1,1);
     scene.add( object );
+
+document.addEventListener("pointerup", () => {
+			isDragging = false;
+		  dragObject = null;
+		  controls.enabled = true;
+		  
+		  alert("UP");
+		} );	
 });
+	
 
 /* //////////////////////////////////////// */
 
