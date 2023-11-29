@@ -176,11 +176,6 @@ sprite.scale.set(35, 35, 1);
 scene.add(sprite);	
 });
 	
-const vec = Vector3();
-camera.getWorldDirection( vec );
-vec.y = 0;
-vec.add( character.position );
-character.lookAt( vec );	
 /* //////////////////////////////////////// */
 
 // Render animation on every rendering phase
