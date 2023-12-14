@@ -166,6 +166,18 @@ controls.enablePan = false;
 /* /////////////////////////////////////////////// */
 
 // Point Light
+import { DirectionalLight } from 'three';
+
+function createLights() {
+  const light = new DirectionalLight('white', 8);
+
+  light.position.set(10, 10, 10);
+
+  return light;
+}
+
+export { createLights };
+	
 var light = new THREE.PointLight( 0xffffcc,1, 10 );
 light.position.set( 4, 30, -20 );
 scene.add( light );
