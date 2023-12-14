@@ -118,7 +118,13 @@ GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
 // Three JS needs mainly below three things
 
 /* //////////////////////////////////////// */
-
+const canvas = document.getElementById("number");
+const ctx = canvas.getContext("2d");
+const x = 32;
+const y = 32;
+const radius = 30;
+const startAngle = 0;
+const endAngle = Math.PI * 2;
 // SCENE
 var scene = new THREE.Scene();
 scene.background = new THREE.Color(0x000000);
