@@ -135,7 +135,7 @@ camera.position.set(0,0,0);
 var renderer = new THREE.WebGLRenderer( { antialias: true } );
 renderer.setPixelRatio( window.devicePixelRatio );	
 renderer.setSize( window.innerWidth, window.innerHeight );
-container.appendChild( renderer.domElement );
+
 const pmremGenerator = new THREE.PMREMGenerator( renderer );
 
 scene.background = new THREE.Color( 0xbfe3dd );
