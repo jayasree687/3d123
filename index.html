@@ -206,7 +206,10 @@ addHotspot(model, 1, 2, 3);
                 // Adjust model position, rotation, and scale if needed
                 model.position.set(0, 0, 0);
                 model.rotation.set(0, 0, 0);
-                model.scale.set(1, 1, 1);	
+                model.scale.set(1, 1, 1);
+    createMarker(model, new Vector3(0,17,8))
+    createMarker(model, new Vector3(4,15,1.7))
+    createMarker(model, new Vector3(-6,0,4))	
 loader.rotation.x = Math.PI/4;
 loader.rotation.y = Math.PI/4;	
 });
@@ -339,7 +342,29 @@ function addHotspot(parent, x, y, z) {
             renderer.setSize(newWidth, newHeight);
         });
 
-
+function createMarker(model, position) {
+  const loader = new TextureLoader();
+  loader.crossOrigin = "";
+  const map = loader.load("https://i.imgur.com/EZynrrA.png");
+  map.encoding = sRGBEncoding
+  
+  const spriteMaterialFront = new SpriteMaterial( { map } );
+  
+  const spriteFront = new Sprite( spriteMaterialFront );
+  spriteFront.position.copy(position) 
+  
+  const spriteMaterialRear = new SpriteMaterial({ 
+    map,
+    opacity: 0.3, 
+    transparent: true, 
+    depthTest: false
+  });
+  
+  const spriteRear = new Sprite( spriteMaterialRear );
+  spriteRear.position.copy(position) 
+  
+  model.add(spriteFront, spriteRear)
+}
 	</script>
 
 </body>
