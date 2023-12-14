@@ -88,10 +88,7 @@ GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
 <div class="annotation annotation1">
     <div class="box box1">
         <div class="circleMark circleMark1">1</div>
-        <div class="boxInner">
-          <p><strong>Circle Mark 1</strong></p>
-          <p>In geometry, a cube is a three-dimensional solid object bounded by six square faces, facets or sides, with three meeting at each vertex.</p>
-        </div>
+        
     </div>
 </div>	
 <script>console.clear();</script>
@@ -154,7 +151,7 @@ var controls = new THREE.OrbitControls( camera, renderer.domElement);
 controls.rotateSpeed = 0.1;
 controls.zoomSpeed = 0.9;
 
-controls.minDistance = .5;
+controls.minDistance = .1;
 controls.maxDistance = 3;
 
 controls.minPolarAngle = 0; // radians
@@ -179,9 +176,9 @@ controls.enablePan = false;
 var light = new THREE.PointLight( 0xffffcc,1, 5 );
 light.position.set( 4, 30, -20 );
 scene.add( light );
-var light1 = new THREE.DirectionalLight('white', 2);
+var light1 = new THREE.DirectionalLight('white', 5);
 light.position.set(10, 10, 10);
-light.rotation.set(-45, 0, -45);	
+light.rotation.set(-45, 0, -180);	
 scene.add( light1 );
 	
 var light2 = new THREE.AmbientLight( 0x20202A, 20, 10 );
