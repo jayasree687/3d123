@@ -107,7 +107,7 @@ GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
 <script src='three.js'></script>
 <script src='https://unpkg.com/three@0.108.0/examples/js/controls/OrbitControls.js'></script>
 <script src='https://unpkg.com/three@0.108.0/examples/js/loaders/GLTFLoader.js'></script>
-
+<script src='https://raw.githubusercontent.com/mrdoob/three.js/master/examples/jsm/environments/RoomEnvironment.js'></script>
 <script>
 // Created using a tutorial from Redstapler
 // GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
@@ -133,7 +133,14 @@ camera.position.set(0,0,0);
 
 // RENDERER
 var renderer = new THREE.WebGLRenderer( { antialias: true } );
+renderer.setPixelRatio( window.devicePixelRatio );	
 renderer.setSize( window.innerWidth, window.innerHeight );
+container.appendChild( renderer.domElement );
+const pmremGenerator = new THREE.PMREMGenerator( renderer );
+const scene = new THREE.Scene();
+scene.background = new THREE.Color( 0xbfe3dd );
+scene.environment = pmremGenerator.fromScene( new RoomEnvironment( renderer ), 0.04 ).texture;
+	
 
 // Append canvas to the body
 document.body.appendChild( renderer.domElement);
@@ -141,7 +148,7 @@ document.body.appendChild( renderer.domElement);
 /* ////////////////////////////////////////// */
 
 // Camera Rotation Control
-var controls = new THREE.OrbitControls( camera );
+var controls = new THREE.OrbitControls( camera, renderer.domElement);
 
 controls.rotateSpeed = 0.1;
 controls.zoomSpeed = 0.9;
