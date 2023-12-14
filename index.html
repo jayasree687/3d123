@@ -8,7 +8,7 @@
 Created using a tutorial from Redstapler
 GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
 ************** */
-
+#hotspotsToggle { position: absolute; top: 10px; left: 10px; padding: 10px; cursor: pointer; }
 body {
   width: 100vw;
   height: 100vh;
@@ -79,6 +79,7 @@ body {
 </style>
 </head>
 <body>
+<div id="hotspotsToggle" onclick="toggleHotspots()">Toggle Hotspots</div>	
 <!-- partial:index.partial.html -->
 <!-- **************
 Created using a tutorial from Redstapler
@@ -116,7 +117,7 @@ GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
 
 /* //////////////////////////////////////// */
 
-
+var hotspotsEnabled = true;
 
 // SCENE
 var scene = new THREE.Scene();
@@ -200,6 +201,12 @@ loader.load( 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/39255/ladybug.gltf', 
      
      //object.scale.set(0.5,0.5,0.5);
     scene.add( object );
+addHotspot(model, 1, 2, 3);
+
+                // Adjust model position, rotation, and scale if needed
+                model.position.set(0, 0, 0);
+                model.rotation.set(0, 0, 0);
+                model.scale.set(1, 1, 1);	
 loader.rotation.x = Math.PI/4;
 loader.rotation.y = Math.PI/4;	
 });
@@ -279,7 +286,58 @@ function updateScreenPosition() {
 }
     
 /*////////////////////////////////////////*/
+function addHotspot(parent, x, y, z) {
+            var hotspotGeometry = new THREE.BoxGeometry(1, 1, 1);
+            var hotspotMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, transparent: true, opacity: 0 });
+            var hotspotMesh = new THREE.Mesh(hotspotGeometry, hotspotMaterial);
+            hotspotMesh.position.set(10,10, 0);
+            parent.add(hotspotMesh);
 
+            hotspotMesh.userData.onClick = function () {
+                console.log('Hotspot clicked!');
+                // Add your hotspot click logic here
+            };
+        }
+
+        function onMouseClick(event) {
+            if (!hotspotsEnabled) return;
+
+            event.preventDefault();
+
+            var raycaster = new THREE.Raycaster();
+            var mouse = new THREE.Vector2();
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            var intersects = raycaster.intersectObjects(scene.children, true);
+
+            if (intersects.length > 0) {
+                var clickedObject = intersects[0].object;
+                if (clickedObject.userData.onClick) {
+                    clickedObject.userData.onClick();
+                }
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+
+        function toggleHotspots() {
+            hotspotsEnabled = !hotspotsEnabled;
+        }
+
+        window.addEventListener('resize', function () {
+            var newWidth = window.innerWidth;
+            var newHeight = window.innerHeight;
+
+            camera.aspect = newWidth / newHeight;
+            camera.updateProjectionMatrix();
+
+            renderer.setSize(newWidth, newHeight);
+        });
 
 
 	</script>
