@@ -8,14 +8,7 @@
 Created using a tutorial from Redstapler
 GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
 ************** */
-h1 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1;
-  text-align: center;
-}
+
 body {
   width: 100vw;
   height: 100vh;
@@ -106,39 +99,18 @@ GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
 		</script>
 <!-- partial -->
  <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js" crossorigin="anonymous"></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/85/three.min.js'></script>
-        <script src="https://unpkg.com/tween.js@16.6.0/src/Tween.js"></script>
-        <script type="module">
-               import {
-  Color,
-  LinearEncoding,
-  MeshBasicMaterial,
-  Mesh,
-  PerspectiveCamera,
-  sRGBEncoding,
-  Sprite,
-  HemisphereLight,
-  SpriteMaterial,
-  TextureLoader,
-  BoxBufferGeometry,
-  Scene,
-  Vector3,
-  WebGLRenderer,
-  Raycaster
-} from "https://unpkg.com/three@0.127.0/build/three.module.js";
-import { OrbitControls } from "https://unpkg.com/three@0.127.0/examples/jsm/controls/OrbitControls.js";
-
-import { GLTFLoader } from 'https://unpkg.com/three@0.127.0/examples/jsm/loaders/GLTFLoader.js';
-
-let camera, scene, renderer, controls;
-let currPosition = 0;
-const positions = [
-[0,0,3],
-        [1, 5, 4],
-        [5, 10, 15]
-      ];
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.149.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.149.0/examples/jsm/"
+    }
+  }
+</script> 
+<script src='three.js'></script>
+<script src='https://unpkg.com/three@0.108.0/examples/js/controls/OrbitControls.js'></script>
+<script src='https://unpkg.com/three@0.108.0/examples/js/loaders/GLTFLoader.js'></script>
 <script src='https://raw.githubusercontent.com/mrdoob/three.js/master/examples/jsm/environments/RoomEnvironment.js'></script>
-	
 <script>
 // Created using a tutorial from Redstapler
 // GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
@@ -156,9 +128,9 @@ scene.background = new THREE.Color(0x000000);
 /* //////////////////////////////////////// */
 
 // CAMERA
-camera = new PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 0.1, 10 );
-  //  camera.position.set(0, 0, 3);
-    camera.position.set(...positions[currPosition]);
+var camera = new THREE.PerspectiveCamera( 80, window.innerWidth / window.innerHeight, 1, 800 );
+camera.position.set(0,0,0);
+
 
 /* ////////////////////////////////////////// */
 
@@ -181,10 +153,21 @@ document.body.appendChild( renderer.domElement);
 // Camera Rotation Control
 var controls = new THREE.OrbitControls( camera, renderer.domElement);
 
+controls.rotateSpeed = 0.1;
+controls.zoomSpeed = 0.9;
 
+controls.minDistance = 3;
+controls.maxDistance = 3;
+
+controls.minPolarAngle = 0; // radians
+controls.maxPolarAngle = Math.PI /2; // radians
+
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.enablePan = false;
 
 scene.background = new THREE.Color().setHSL( 0.6, 0, 1 );
-scene.fog = new THREE.Fog( scene.background, 1, 2000 );
+scene.fog = new THREE.Fog( scene.background, 1, 5000 );
 
 
 	
@@ -201,7 +184,7 @@ scene.fog = new THREE.Fog( scene.background, 1, 2000 );
 				hemiLight.position.set( 0, 50, 0 );
 				scene.add( hemiLight );
 
-				const hemiLightHelper = new THREE.HemisphereLightHelper( hemiLight, 1 );
+				const hemiLightHelper = new THREE.HemisphereLightHelper( hemiLight, 10 );
 				scene.add( hemiLightHelper );
 
 				//
@@ -224,10 +207,10 @@ scene.fog = new THREE.Fog( scene.background, 1, 2000 );
 				dirLight.shadow.camera.top = d;
 				dirLight.shadow.camera.bottom = - d;
 
-				dirLight.shadow.camera.far = 2000;
+				dirLight.shadow.camera.far = 3500;
 				dirLight.shadow.bias = - 0.0001;
 
-				const dirLightHelper = new THREE.DirectionalLightHelper( dirLight, 5 );
+				const dirLightHelper = new THREE.DirectionalLightHelper( dirLight, 10 );
 				scene.add( dirLightHelper );
 
 				// GROUND
@@ -274,27 +257,37 @@ scene.fog = new THREE.Fog( scene.background, 1, 2000 );
 
 loader1.crossOrigin = true;
 
-loader1.load( 'Room_ttt.glb', function ( data ) {
+loader1.load( 'Room_tt.glb', function ( data ) {
     var object = data.scene;
      object.position.set(0, 0, 0);
      object.scale.set(1,1,1);
      	
     scene.add( object );
-    // createMarker(model, () => openWebsite('https://example.com'), 0,17,8)
-    createMarker(model,() => setFrontView1(), 0,0,0)
-    createMarker(model, () => setFrontView(),1,1,1)
+loader1.rotation.x = Math.PI/4;
+loader1.rotation.y = Math.PI/4;	
+
+
+const numberTexture = new THREE.CanvasTexture(
+    document.querySelector('#number')
+);
+
+const spriteMaterial = new THREE.SpriteMaterial({
+    map: numberTexture,
+    alphaTest: 0.5,
+    transparent: true,
+    depthTest: false,
+    depthWrite: false
+});
+
+sprite = new THREE.Sprite(spriteMaterial);
+sprite.position.set(250, 250, 250);
+sprite.scale.set(35, 35, 1);
+
+scene.add(sprite);	
+});
 	
-});	
 /* //////////////////////////////////////// */
-function setFrontView() {
-  animate();
-  interval();
-  }
-  function setFrontView1() {
-    positions[1] = [6,1,5];
-  animate();
-  interval();
-  }
+
 // Render animation on every rendering phase
 function render () {
   requestAnimationFrame( render ); 
@@ -315,7 +308,25 @@ window.addEventListener( 'resize', function () {
 
 
 	
+function updateAnnotationOpacity() {
+    const meshDistance = camera.position.distanceTo(mesh.position);
+    const spriteDistance = camera.position.distanceTo(sprite1.position);
+    spriteBehindObject = spriteDistance > meshDistance;
+    sprite1.material.opacity = spriteBehindObject ? 0.25 : 1;
+    sprite1.material.opacity = 0;
+  
+    const meshDistance2 = camera.position.distanceTo(mesh.position);
+    const spriteDistance2 = camera.position.distanceTo(sprite2.position);
+    spriteBehindObject2 = spriteDistance2 > meshDistance2;
+    sprite2.material.opacity = spriteBehindObject2 ? 0.25 : 1;
+    sprite2.material.opacity = 0; // sprite2透明度
+}
 
+function updateScreenPosition() {
+    const vector_1 = new THREE.Vector3(200, 200, -100);
+    const vector_2 = new THREE.Vector3(-200, -100, 250);
+}
+    
 /*////////////////////////////////////////*/
 
         
@@ -346,85 +357,7 @@ const params = {
 				gui.add( params, 'toggleHemisphereLight' ).name( 'toggle hemisphere light' );
 				gui.add( params, 'toggleDirectionalLight' ).name( 'toggle directional light' );
 				gui.open();
-       
-                function setFrontView() {
-  animate();
-  interval();
-  }
-  function setFrontView1() {
-    positions[1] = [6,1,5];
-  animate();
-  interval();
-  }
-function openWebsite(url) {
-    window.location.href = url;
-  }
-  function animate(){
-        requestAnimationFrame(animate);
-        // stats.update();
-        TWEEN.update();
-        camera.lookAt(scene.position);
-        renderer.render(scene, camera);
-      }
-  function interval(){
-        currPosition = currPosition === 0 ? 1 : 0;
-        tweenCamera(camera, positions[currPosition], 3000);
-      }
-function createMarker(model, onClick,x,y,z) {
-  const loader = new TextureLoader();
-  loader.crossOrigin = "";
-  const spriteMap = loader.load("https://i.imgur.com/EZynrrA.png");
-  spriteMap.encoding = sRGBEncoding
-  
-  const spriteMaterialFront = new SpriteMaterial( { map:spriteMap } );
-  
-  const spriteFront = new Sprite( spriteMaterialFront );
-  // spriteFront.position.copy(position) 
-  // spriteFront.callback = () => openWebsite('https://example.com');
-  // spriteFront.scale.set(0.1, 0.1, 1);
-  spriteFront.position.set(x,y,z);
-  spriteFront.callback = onClick;
-  // const spriteMaterialRear = new SpriteMaterial({ 
-  //   map,
-  //   opacity: 0.3, 
-  //   transparent: true, 
-  //   depthTest: false
-  // });
-  
-  // const spriteRear = new Sprite( spriteMaterialRear );
-  // spriteRear.callback = () => {
-  //   window.location.href = 'EXAMPLE.COM';
-  // };
-  // spriteRear.position.copy(position) 
-  
-  model.add(spriteFront)
-}
-document.addEventListener('click', (event) => {
-    const raycaster = new Raycaster();
-    const mouse = new Vector3();
-
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-    raycaster.setFromCamera(mouse, camera);
-
-    const intersects = raycaster.intersectObjects(scene.children, true);
-
-    if (intersects.length > 0 && intersects[0].object.callback) {
-      intersects[0].object.callback();
-    }
-  });
-
-  function tweenCamera(camera, position, duration) {        
-        new TWEEN.Tween(camera.position).to({
-          x: position[0],
-          y: position[1],
-          z: position[2]
-        }, duration)
-        .easing(TWEEN.Easing.Quadratic.InOut)
-        .start();
-      }    
-                    
+	
 	</script>
 
 </body>
