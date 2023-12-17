@@ -184,7 +184,7 @@ scene.fog = new THREE.Fog( scene.background, 1, 5000 );
 				hemiLight.position.set( 0, 50, 0 );
 				scene.add( hemiLight );
 
-				const hemiLightHelper = new THREE.HemisphereLightHelper( hemiLight, 10 );
+				const hemiLightHelper = new THREE.HemisphereLightHelper( hemiLight, 1 );
 				scene.add( hemiLightHelper );
 
 				//
@@ -207,10 +207,10 @@ scene.fog = new THREE.Fog( scene.background, 1, 5000 );
 				dirLight.shadow.camera.top = d;
 				dirLight.shadow.camera.bottom = - d;
 
-				dirLight.shadow.camera.far = 3500;
+				dirLight.shadow.camera.far = 2000;
 				dirLight.shadow.bias = - 0.0001;
 
-				const dirLightHelper = new THREE.DirectionalLightHelper( dirLight, 10 );
+				const dirLightHelper = new THREE.DirectionalLightHelper( dirLight, 5 );
 				scene.add( dirLightHelper );
 
 				// GROUND
