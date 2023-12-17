@@ -307,25 +307,7 @@ window.addEventListener( 'resize', function () {
 
 
 	
-function updateAnnotationOpacity() {
-    const meshDistance = camera.position.distanceTo(mesh.position);
-    const spriteDistance = camera.position.distanceTo(sprite1.position);
-    spriteBehindObject = spriteDistance > meshDistance;
-    sprite1.material.opacity = spriteBehindObject ? 0.25 : 1;
-    sprite1.material.opacity = 0;
-  
-    const meshDistance2 = camera.position.distanceTo(mesh.position);
-    const spriteDistance2 = camera.position.distanceTo(sprite2.position);
-    spriteBehindObject2 = spriteDistance2 > meshDistance2;
-    sprite2.material.opacity = spriteBehindObject2 ? 0.25 : 1;
-    sprite2.material.opacity = 0; // sprite2透明度
-}
 
-function updateScreenPosition() {
-    const vector_1 = new THREE.Vector3(200, 200, -100);
-    const vector_2 = new THREE.Vector3(-200, -100, 250);
-}
-    
 /*////////////////////////////////////////*/
 
         
