@@ -156,15 +156,9 @@ scene.background = new THREE.Color(0x000000);
 /* //////////////////////////////////////// */
 
 // CAMERA
-var camera = new THREE.PerspectiveCamera( 65, window.innerWidth / window.innerHeight, 1, 800 );
-camera.position.set(-8,2,1);
-let currPosition = 0;
-const positions = [
-[0,0,3],
-        [1, 5, 4],
-        [5, 10, 15]
-      ];
-
+camera = new PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 0.1, 10 );
+  //  camera.position.set(0, 0, 3);
+    camera.position.set(...positions[currPosition]);
 
 /* ////////////////////////////////////////// */
 
