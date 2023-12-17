@@ -282,29 +282,6 @@ scene.fog = new THREE.Fog( scene.background, 1, 5000 );
 /* ////////////////////////////////////////// */
 
 // GLTF Loader to Load and manipulate 3D Models
-var loader = new THREE.GLTFLoader();
-
-loader.crossOrigin = true;
-
-loader.load( 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/39255/ladybug.gltf', function ( data ) {
-    var object = data.scene;
-     object.position.set(0, -10, -0.1);
-     
-     //object.scale.set(0.5,0.5,0.5);
-    scene.add( object );
-addHotspot(model, 1, 2, 3);
-
-                // Adjust model position, rotation, and scale if needed
-                model.position.set(0, 0, 0);
-                model.rotation.set(0, 0, 0);
-                model.scale.set(1, 1, 1);
-    createMarker(model, new Vector3(0,17,8))
-    createMarker(model, new Vector3(4,15,1.7))
-    createMarker(model, new Vector3(-6,0,4))	
-loader.rotation.x = Math.PI/4;
-loader.rotation.y = Math.PI/4;	
-});
-
   var loader1 = new THREE.GLTFLoader();
 
 loader1.crossOrigin = true;
