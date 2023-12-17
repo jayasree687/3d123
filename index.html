@@ -8,7 +8,14 @@
 Created using a tutorial from Redstapler
 GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
 ************** */
-
+h1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  text-align: center;
+}
 body {
   width: 100vw;
   height: 100vh;
@@ -131,6 +138,12 @@ scene.background = new THREE.Color(0x000000);
 // CAMERA
 var camera = new THREE.PerspectiveCamera( 65, window.innerWidth / window.innerHeight, 1, 800 );
 camera.position.set(-8,2,1);
+let currPosition = 0;
+const positions = [
+[0,0,3],
+        [1, 5, 4],
+        [5, 10, 15]
+      ];
 
 
 /* ////////////////////////////////////////// */
@@ -263,7 +276,11 @@ loader1.load( 'Room_ttt.glb', function ( data ) {
      object.position.set(0, 0, 0);
      object.scale.set(1,1,1);
      	
-    scene.add( object );	
+    scene.add( object );
+    // createMarker(model, () => openWebsite('https://example.com'), 0,17,8)
+    createMarker(model,() => setFrontView1(), 4,15,1.7)
+    createMarker(model, () => setFrontView(),-6,0,4)
+	
 });	
 /* //////////////////////////////////////// */
 
@@ -318,7 +335,85 @@ const params = {
 				gui.add( params, 'toggleHemisphereLight' ).name( 'toggle hemisphere light' );
 				gui.add( params, 'toggleDirectionalLight' ).name( 'toggle directional light' );
 				gui.open();
+       
+                function setFrontView() {
+  animate();
+  interval();
+  }
+  function setFrontView1() {
+    positions[1] = [6,1,5];
+  animate();
+  interval();
+  }
+function openWebsite(url) {
+    window.location.href = url;
+  }
+  function animate(){
+        requestAnimationFrame(animate);
+        // stats.update();
+        TWEEN.update();
+        camera.lookAt(scene.position);
+        renderer.render(scene, camera);
+      }
+  function interval(){
+        currPosition = currPosition === 0 ? 1 : 0;
+        tweenCamera(camera, positions[currPosition], 3000);
+      }
+function createMarker(model, onClick,x,y,z) {
+  const loader = new TextureLoader();
+  loader.crossOrigin = "";
+  const spriteMap = loader.load("https://i.imgur.com/EZynrrA.png");
+  spriteMap.encoding = sRGBEncoding
+  
+  const spriteMaterialFront = new SpriteMaterial( { map:spriteMap } );
+  
+  const spriteFront = new Sprite( spriteMaterialFront );
+  // spriteFront.position.copy(position) 
+  // spriteFront.callback = () => openWebsite('https://example.com');
+  // spriteFront.scale.set(0.1, 0.1, 1);
+  spriteFront.position.set(x,y,z);
+  spriteFront.callback = onClick;
+  // const spriteMaterialRear = new SpriteMaterial({ 
+  //   map,
+  //   opacity: 0.3, 
+  //   transparent: true, 
+  //   depthTest: false
+  // });
+  
+  // const spriteRear = new Sprite( spriteMaterialRear );
+  // spriteRear.callback = () => {
+  //   window.location.href = 'EXAMPLE.COM';
+  // };
+  // spriteRear.position.copy(position) 
+  
+  model.add(spriteFront)
+}
+document.addEventListener('click', (event) => {
+    const raycaster = new Raycaster();
+    const mouse = new Vector3();
 
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+
+    const intersects = raycaster.intersectObjects(scene.children, true);
+
+    if (intersects.length > 0 && intersects[0].object.callback) {
+      intersects[0].object.callback();
+    }
+  });
+
+  function tweenCamera(camera, position, duration) {        
+        new TWEEN.Tween(camera.position).to({
+          x: position[0],
+          y: position[1],
+          z: position[2]
+        }, duration)
+        .easing(TWEEN.Easing.Quadratic.InOut)
+        .start();
+      }    
+                    
 	</script>
 
 </body>
