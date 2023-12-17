@@ -106,19 +106,39 @@ GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
 		</script>
 <!-- partial -->
  <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js" crossorigin="anonymous"></script>
-<script type="importmap">
-  {
-    "imports": {
-      "three": "https://unpkg.com/three@0.149.0/build/three.module.js",
-      "three/addons/": "https://unpkg.com/three@0.149.0/examples/jsm/"
-    }
-  }
-</script> 
-<script src='three.js'></script>
-<script src='https://unpkg.com/three@0.108.0/examples/js/controls/OrbitControls.js'></script>
-<script src='https://unpkg.com/three@0.108.0/examples/js/loaders/GLTFLoader.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/85/three.min.js'></script>
+        <script src="https://unpkg.com/tween.js@16.6.0/src/Tween.js"></script>
+        <script type="module">
+               import {
+  Color,
+  LinearEncoding,
+  MeshBasicMaterial,
+  Mesh,
+  PerspectiveCamera,
+  sRGBEncoding,
+  Sprite,
+  HemisphereLight,
+  SpriteMaterial,
+  TextureLoader,
+  BoxBufferGeometry,
+  Scene,
+  Vector3,
+  WebGLRenderer,
+  Raycaster
+} from "https://unpkg.com/three@0.127.0/build/three.module.js";
+import { OrbitControls } from "https://unpkg.com/three@0.127.0/examples/jsm/controls/OrbitControls.js";
+
+import { GLTFLoader } from 'https://unpkg.com/three@0.127.0/examples/jsm/loaders/GLTFLoader.js';
+
+let camera, scene, renderer, controls;
+let currPosition = 0;
+const positions = [
+[0,0,3],
+        [1, 5, 4],
+        [5, 10, 15]
+      ];
 <script src='https://raw.githubusercontent.com/mrdoob/three.js/master/examples/jsm/environments/RoomEnvironment.js'></script>
-<script src="https://unpkg.com/tween.js@16.6.0/src/Tween.js"></script>	
+	
 <script>
 // Created using a tutorial from Redstapler
 // GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
