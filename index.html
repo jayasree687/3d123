@@ -20,11 +20,11 @@ body {
   margin: 0;
 }
 body {
-				color: #444;
-			}
-			a {
-				color: #08f;
-			}
+	color: #444444;
+	}
+a {
+	color: #0088ff;
+}
 .hud {
 		display: block;
 		position: absolute;
@@ -45,7 +45,37 @@ body {
 		background: rgba( 255, 255, 255, 0.5 );
 }
 	
-
+}
+.annotation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    margin-left: 15px;
+    margin-top: 15px;
+    padding: 1em;
+    width: 200px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: .5em;
+    font-size: 12px;
+    line-height: 1.2;
+    transition: opacity .5s;
+    &::before {
+        content: '1';
+        position: absolute;
+        top: -30px;
+        left: -30px;
+        width: 30px;
+        height: 30px;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        font-size: 16px;
+        line-height: 30px;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.8);
+    }
+}
 
 #number {
     position: absolute;
@@ -61,10 +91,7 @@ Created using a tutorial from Redstapler
 GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
 ************** -->
 <div class="annotation annotation1">
-    <div class="box box1">
-        <div class="circleMark circleMark1">1</div>
-        
-    </div>
+    
 </div>	
 <script>console.clear();</script>
 <script type="x-shader/x-vertex" id="vertexShader">
@@ -80,7 +107,25 @@ GLTF 3D Model from Shaw Pen https://codepen.io/shshaw/pen/yPPOEg
 
 			}
 
-		</script>	
+		</script>
+
+		<script type="x-shader/x-fragment" id="fragmentShader">
+
+			uniform vec3 topColor;
+			uniform vec3 bottomColor;
+			uniform float offset;
+			uniform float exponent;
+
+			varying vec3 vWorldPosition;
+
+			void main() {
+
+				float h = normalize( vWorldPosition + offset ).y;
+				gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
+
+			}
+
+		</script>
 <!-- partial -->
  <script async src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js" crossorigin="anonymous"></script>
 <script type="importmap">
@@ -150,7 +195,8 @@ controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 controls.enablePan = false;
 
-
+scene.background = new THREE.Color().setHSL( 0.6, 0, 1 );
+scene.fog = new THREE.Fog( scene.background, 1, 5000 );
 
 
 	
@@ -161,17 +207,18 @@ controls.enablePan = false;
 
 // Point Light
 
-const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 2 );
-hemiLight.color.setHSL( 0.6, 1, 0.6 );
-hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
-hemiLight.position.set( 0, 50, 0 );
-scene.add( hemiLight );
-const hemiLightHelper = new THREE.HemisphereLightHelper( hemiLight, 10 );
-scene.add( hemiLightHelper );	
-var light = new THREE.PointLight( 0xffffcc,1, 5 );
-light.position.set( 4, 30, -20 );
-scene.add( light );
-const dirLight = new THREE.DirectionalLight( 0xffffff, 3 );
+	const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 2 );
+				hemiLight.color.setHSL( 0.6, 1, 0.6 );
+				hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+				hemiLight.position.set( 0, 50, 0 );
+				scene.add( hemiLight );
+
+				const hemiLightHelper = new THREE.HemisphereLightHelper( hemiLight, 10 );
+				scene.add( hemiLightHelper );
+
+				//
+
+				const dirLight = new THREE.DirectionalLight( 0xffffff, 3 );
 				dirLight.color.setHSL( 0.1, 1, 0.95 );
 				dirLight.position.set( - 1, 1.75, 1 );
 				dirLight.position.multiplyScalar( 30 );
@@ -195,10 +242,42 @@ const dirLight = new THREE.DirectionalLight( 0xffffff, 3 );
 				const dirLightHelper = new THREE.DirectionalLightHelper( dirLight, 10 );
 				scene.add( dirLightHelper );
 
-	
-var light2 = new THREE.AmbientLight( 0x20202A, 20, 10 );
-light2.position.set( 30, -10, 30 );
-scene.add( light2 );
+				// GROUND
+
+				const groundGeo = new THREE.PlaneGeometry( 10000, 10000 );
+				const groundMat = new THREE.MeshLambertMaterial( { color: 0xffffff } );
+				groundMat.color.setHSL( 0.095, 1, 0.75 );
+
+				const ground = new THREE.Mesh( groundGeo, groundMat );
+				ground.position.y = - 33;
+				ground.rotation.x = - Math.PI / 2;
+				ground.receiveShadow = true;
+				scene.add( ground );
+
+				// SKYDOME
+
+				const vertexShader = document.getElementById( 'vertexShader' ).textContent;
+				const fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
+				const uniforms = {
+					'topColor': { value: new THREE.Color( 0x0077ff ) },
+					'bottomColor': { value: new THREE.Color( 0xffffff ) },
+					'offset': { value: 33 },
+					'exponent': { value: 0.6 }
+				};
+				uniforms[ 'topColor' ].value.copy( hemiLight.color );
+
+				scene.fog.color.copy( uniforms[ 'bottomColor' ].value );
+
+				const skyGeo = new THREE.SphereGeometry( 4000, 32, 15 );
+				const skyMat = new THREE.ShaderMaterial( {
+					uniforms: uniforms,
+					vertexShader: vertexShader,
+					fragmentShader: fragmentShader,
+					side: THREE.BackSide
+				} );
+
+				const sky = new THREE.Mesh( skyGeo, skyMat );
+				scene.add( sky );
 
 /* ////////////////////////////////////////// */
 
@@ -230,7 +309,7 @@ loader.rotation.y = Math.PI/4;
 
 loader1.crossOrigin = true;
 
-loader1.load( 'Room_t.glb', function ( data ) {
+loader1.load( 'Room_tt.glb', function ( data ) {
     var object = data.scene;
      object.position.set(0, 0, 0);
      object.scale.set(1,1,1);
@@ -377,6 +456,27 @@ function createMarker(model, position) {
   
   model.add(spriteFront, spriteRear)
 }
+const params = {
+					toggleHemisphereLight: function () {
+
+						hemiLight.visible = ! hemiLight.visible;
+						hemiLightHelper.visible = ! hemiLightHelper.visible;
+
+					},
+					toggleDirectionalLight: function () {
+
+						dirLight.visible = ! dirLight.visible;
+						dirLightHelper.visible = ! dirLightHelper.visible;
+
+					}
+				};
+
+				const gui = new GUI();
+
+				gui.add( params, 'toggleHemisphereLight' ).name( 'toggle hemisphere light' );
+				gui.add( params, 'toggleDirectionalLight' ).name( 'toggle directional light' );
+				gui.open();
+	
 	</script>
 
 </body>
