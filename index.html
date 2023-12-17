@@ -283,7 +283,15 @@ loader1.load( 'Room_ttt.glb', function ( data ) {
 	
 });	
 /* //////////////////////////////////////// */
-
+function setFrontView() {
+  animate();
+  interval();
+  }
+  function setFrontView1() {
+    positions[1] = [6,1,5];
+  animate();
+  interval();
+  }
 // Render animation on every rendering phase
 function render () {
   requestAnimationFrame( render ); 
