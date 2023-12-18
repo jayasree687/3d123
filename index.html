@@ -320,7 +320,7 @@ const params = {
 					}
 				};
 
-				const gui = new THREE.GUI();
+				const gui = new GUI();
 
 				gui.add( params, 'toggleHemisphereLight' ).name( 'toggle hemisphere light' );
 				gui.add( params, 'toggleDirectionalLight' ).name( 'toggle directional light' );
@@ -353,7 +353,7 @@ function createMarker(model, onClick,x,y,z) {
   const loader = new THREE.TextureLoader();
   loader.crossOrigin = "";
   const spriteMap = loader.load("https://i.imgur.com/EZynrrA.png");
-  spriteMap.encoding = sRGBEncoding
+  spriteMap.encoding = THREE.sRGBEncoding
   
   const spriteMaterialFront = new THREE.SpriteMaterial( { map:spriteMap } );
   
