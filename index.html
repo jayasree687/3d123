@@ -350,7 +350,7 @@ function openWebsite(url) {
         tweenCamera(camera, positions[currPosition], 3000);
       }
 function createMarker(model, onClick,x,y,z) {
-  const loader = new TextureLoader();
+  const loader = new THREE.TextureLoader();
   loader.crossOrigin = "";
   const spriteMap = loader.load("https://i.imgur.com/EZynrrA.png");
   spriteMap.encoding = sRGBEncoding
