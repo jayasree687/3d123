@@ -355,7 +355,7 @@ function createMarker(model, onClick,x,y,z) {
   const spriteMap = loader.load("https://i.imgur.com/EZynrrA.png");
   spriteMap.encoding = sRGBEncoding
   
-  const spriteMaterialFront = new SpriteMaterial( { map:spriteMap } );
+  const spriteMaterialFront = new THREE.SpriteMaterial( { map:spriteMap } );
   
   const spriteFront = new Sprite( spriteMaterialFront );
   // spriteFront.position.copy(position) 
