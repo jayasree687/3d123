@@ -357,7 +357,7 @@ function createMarker(model, onClick,x,y,z) {
   
   const spriteMaterialFront = new THREE.SpriteMaterial( { map:spriteMap } );
   
-  const spriteFront = new Sprite( spriteMaterialFront );
+  const spriteFront = new THREE.Sprite( spriteMaterialFront );
   // spriteFront.position.copy(position) 
   // spriteFront.callback = () => openWebsite('https://example.com');
   // spriteFront.scale.set(0.1, 0.1, 1);
@@ -379,8 +379,8 @@ function createMarker(model, onClick,x,y,z) {
   model.add(spriteFront)
 }
 document.addEventListener('click', (event) => {
-    const raycaster = new Raycaster();
-    const mouse = new Vector3();
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector3();
 
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
